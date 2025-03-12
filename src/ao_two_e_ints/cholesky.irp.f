@@ -178,7 +178,7 @@ END_PROVIDER
      rank_max = np
      ! Avoid too large arrays when there are many electrons
      if (elec_num > 10) then
-       rank_max = min(np,20*elec_num*elec_num)
+       rank_max = min(np,25*elec_num*elec_num)
      endif
 
      call mmap_create_d('', (/ ndim8, rank_max /), .False., .True., map)
@@ -469,7 +469,7 @@ END_PROVIDER
      !$OMP PARALLEL DO PRIVATE(k,j)
      do k=1,rank
        do j=1,ao_num
-           cholesky_ao(1:ao_num,j,rank-k+1) = L((j-1_8)*ao_num+1_8:1_8*j*ao_num,rank-k+1)
+           cholesky_ao(1:ao_num,j,k) = L((j-1_8)*ao_num+1_8:1_8*j*ao_num,rank-k+1)
        enddo
      enddo
      !$OMP END PARALLEL DO

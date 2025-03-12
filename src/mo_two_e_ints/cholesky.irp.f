@@ -1,12 +1,3 @@
-BEGIN_PROVIDER [ logical, do_mo_cholesky ]
- implicit none
- BEGIN_DOC
- ! If True, use Cholesky vectors for MO integrals
- END_DOC
- do_mo_cholesky = do_ao_cholesky
-! do_mo_cholesky = .False.
-END_PROVIDER
-
  BEGIN_PROVIDER [ integer, cholesky_mo_num ]
 &BEGIN_PROVIDER [ integer, cholesky_mo_num_split, (1:5)]
  implicit none
@@ -175,9 +166,9 @@ BEGIN_PROVIDER [ real, cholesky_mo_transp_sp, (cholesky_mo_num, mo_num, mo_num) 
 
  integer :: i,j,k
  !$OMP PARALLEL DO PRIVATE(k)
- do k=1,cholesky_mo_num
-  do j=1,mo_num
-    do i=1,mo_num
+ do j=1,mo_num
+  do i=1,mo_num
+   do k=1,cholesky_mo_num
       cholesky_mo_transp_sp(k,i,j) = cholesky_mo_transp(k,i,j)
     enddo
   enddo
